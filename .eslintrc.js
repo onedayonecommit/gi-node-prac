@@ -1,6 +1,6 @@
 // 내보내기 exports
 module.exports = {
-  extends: ["airbnb-base", "prettier"],
+  extends: ["airbnb-base", "plugin:node/recommended", "prettier"],
 };
 
 // 설정 하는 법
@@ -28,3 +28,9 @@ module.exports = {
 // extends: ["airbnb-base", "prettier"] prettier 의 규칙도 같이 적용해주면 된다.
 // ESlint 규칙을 쓰기만 하면
 // 나중에 면접가서도 eslint 사용할줄 알고 에어비엔비 규칙성을 사용했다
+
+// node 에 대한 설정 node 전용 플러그인
+// node 전용 플로그인 설치 명령어
+// +==============================================================+
+// npm install --save-dev eslint-plugin-node
+// +==============================================================+
