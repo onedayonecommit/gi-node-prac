@@ -8,3 +8,9 @@
 
 // 사용할 데이터 베이스 선택
 // use 데이터베이스이름 ;
+
+// 테이블에 컬럼 추가 쿼리문
+// insert into `database name` , `table name` (`id`,`content`) values ('1','hello')
+
+// 테이블에 컬럼 제거 쿼리문
+// delete from `데이터 베이스 이름` . `테이블 이름` where (`id` = 1);
