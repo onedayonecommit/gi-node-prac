@@ -12,6 +12,8 @@ const fs = require("fs");
 const ejs = require("ejs");
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
+const { info } = require("console");
+const { query } = require("express");
 
 app.use(
   bodyParser.urlencoded({
@@ -91,4 +93,61 @@ app.post("/delete", (req, res) => {
       if (result) res.redirect("/");
     }
   );
+});
+
+app.get("/revise", (req, res) => {
+  //   console.log(req);
+  // fs 모듈로 파일을 읽어온다
+  // fs 모듈이 readFile 파일을 읽어오는 함수
+  // 매개변수 첫번째 파일의 경로이름
+  // 두번째는 인코딩 방식
+  // 세번째는 콜백 함수
+  fs.readFile("html/revise.html", "utf-8", (err, data1) => {
+    // ejs render 함수로 fs 로 불러온 파일을 그려줌
+    temp.query("select * from members", (error, result) => {
+      if (error) console.log(error);
+      else {
+        console.log(result);
+        console.log(data1);
+        res.send(
+          ejs.render(data1, {
+            data1: result,
+          })
+        );
+      }
+    });
+  });
+});
+
+app.post("/revise", (req, res) => {
+  console.log(req.body);
+  const info12 = [];
+  if (req.body.rename != "") {
+    temp.query(
+      "update members set name = '" +
+        req.body.rename +
+        "' where id = '" +
+        req.body.id +
+        "';"
+    );
+  }
+  if (req.body.renumber != "")
+    temp.query(
+      "update members set number = '" +
+        req.body.renumber +
+        "' where id = '" +
+        req.body.id +
+        "';"
+    );
+  if (req.body.reseries != "")
+    temp.query(
+      "update members set series = '" +
+        req.body.reseries +
+        "' where id = '" +
+        req.body.id +
+        "';"
+    );
+  res.redirect("/");
+  console.log(info12);
+  // temp.query("update members set ");
 });

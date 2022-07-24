@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <% data1.forEach(function (el, index){ %>
+        <tr>    
+            <form action="/revise" method="post">
+                <button type="submit">수정</button>
+                <td>
+                    id <%= el.id %> 는 변경 불가
+                    <input type="hidden" name="id" value="<%= el.id %>">
+                </td>
+                <td>
+                    변경 전 : name = <%= el.name %> >>>
+                    name : <input type="text" name="rename" placeholder="변경 할 name">
+                </td>
+                <td>
+                    변경 전 : number = <%= el.number %> >>>
+                    number : <input type="text" name="renumber" placeholder="변경 할 number">
+                </td>
+                <td>
+                    변경 전 : series = <%= el.series %> >>>
+                    series : <input type="text" name="reseries" placeholder="변경 할 series">
+                </td>
+                <%= el.series %>
+            </form>
+        </tr>
+            <% }); %>
+        </body>
+</html>
