@@ -22,11 +22,13 @@ app.get("/", (req, res) => {
 // io.sockets.on("disconnect") 클라이언트가 종료했을 때
 
 io.sockets.on("connection", (socket) => {
+    console.log("1")
     // 클라이언트에서 socket.emit("message",data);
     // 웹소켓에 연결되어있는 message 이벤트를 실행시켜준다.
     // 밑에 코드
-    socket.on("message", (data) => {
+    socket.on("message1", (data) => {
         //요기
-        io.sockets.emit("message", data);
+        console.log("내가 확인한 첫번째 데이터",data)
+        io.sockets.emit("message2", data);
     });
 });
