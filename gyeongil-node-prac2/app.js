@@ -42,10 +42,28 @@ const server = app.listen(PORT, () => {
 // socketio(매개 변수) 매개변수는 express server
 
 // 소켓 버서를 생성 및 실행
-const io = socketio(server)
+const io = socketio(server);
+let userid = [];
 // socketio 사용해서 연결
 // connection -> 클라이언트가 웹소켓 서버에 접속할 때 발생
 // on 함수로 connection 이벤트에 매칭해서 소켓 이벤트 연결
 io.sockets.on("connection", (socket) => {
     console.log('유저가 접속')
+    userid.push(socket.id)
+    console.log(userid);
+    socket.on("hi", (data) => {
+        console.log(data, "웹소켓 hi 이벤트가 실행")
+
+        // 아래는 자기자신한테만 보냄
+        // socket.emit("hi", "웹소켓에서 클라이언트로 보냄")
+
+        // 아래는 모든 대상에게 자기자신까지 포함
+        // io.sockets.emit("hi", "모두에게")
+        
+        // 자기자신 제외 모든 대상에게 발생(방송마냥)
+        // socket.broadcast.emit("hi","나 빼고 모두다");
+
+        // 비밀대화 
+        io.sockets.to(data.id).emit("hi", data.msg);
+    })
 })
