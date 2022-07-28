@@ -93,8 +93,8 @@
         </div>
         <div id="main">
             <select id="rooms">
-                <option value="">병아리 방</option>
-                <option value="">개구리 방</option>
+                <option value="병아리 방">병아리 방</option>
+                <option value="개구리 방">개구리 방</option>
             </select>
             <ul id="messages"></ul>
             <div id="send">
@@ -126,7 +126,7 @@
                 let el = e.target;
                 console.log(el.selectedIndex)
                 socket.emit("leaveRoom", room, name)
-                let room = rooms.options[rooms.selectedIndex].value;
+                room = rooms.options[rooms.selectedIndex].value;
                 socket.emit("joinRoom", room, name)
             }
             socket.on("joinRoom",(room,name)=>{

@@ -48,7 +48,8 @@ app.get("/", (req, res) => {
   })
 })
 
-app.get('/seats', (req, res) => {
+app.get('/seats', (req, res) => { // '/seats' 경로로 seats 배열을 전송
+  console.log(seats)
   res.send(seats)
 })
 
