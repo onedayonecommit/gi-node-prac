@@ -7,6 +7,8 @@ const server = app.listen(8080, () => {
     console.log("8080 server start");
 })
 
+app.use(express.static("cssandjs"))
+
 const io = socketio(server)
 
 app.get("/", (req, res) => {
@@ -22,7 +24,6 @@ io.on("connection", (socket) => {
         // 방 개념으로 접속 시켜주는 함수 join(방 이름)
         console.log(room)
         socket.join(room);
-        console.log(room, name)
         // to(room) 현재 그 방에 있는 클라이언트에게 요청
         io.to(room).emit("joinRoom",room,name)
     })
@@ -34,6 +35,10 @@ io.on("connection", (socket) => {
     });
     socket.on("chat", (room, name, msg) => {
         io.to(room).emit("chat",name,msg)
+    })
+    socket.on("joinpeople", (data) => {
+        console.log(data)
+        io.sockets.emit("checkjoin",data)
     })
 })
 

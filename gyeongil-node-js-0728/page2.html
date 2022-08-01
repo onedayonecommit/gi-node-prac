@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script
+            type="text/javascript"
+            src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <!-- <link rel="stylesheet" href="/css/page2.css"> -->
+    </head>
+    <body>
+        <div class="main">
+            <div class="chatroom">
+                <select name="" id="guest">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+                <div class="chat">
+                    <input type="text" class="chatgo">
+                    <button id="send">전송</button>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        window.onload = function () {
+            const socket = io.connect()
+            const chatgo = document.querySelector(".chatgo")
+            send.onclick = () => {
+                socket.emit("btnclick", {
+                    chat: chatgo.value
+                })
+                chatgo.value = ""
+                socket.on("two", (data) => {
+                    console.log(data)
+                    let chatting = document.querySelector(".chat")
+                    chatting.innerHTML += data
+                })
+            }
+        }
+    </script>
+    <!-- <script src="/js/page2.js"></script> -->
+</html>
