@@ -4,7 +4,7 @@ const socketio = require("socket.io");
 
 const app = express();
 
-const PORT = 8080;
+const PORT = 4040;
 
 const server = app.listen(PORT, () => {
     console.log(8080,"server start!")
@@ -29,6 +29,6 @@ io.sockets.on("connection", (socket) => {
     socket.on("message1", (data) => {
         //요기
         console.log("내가 확인한 첫번째 데이터",data)
-        io.sockets.emit("message2", data);
+        // io.sockets.emit("message2", data);
     });
 });

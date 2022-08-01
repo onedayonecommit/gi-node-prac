@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 })
 
 io.on("connection", (socket) => {
-    console.log(socket)
+    console.log(socket.id)
     console.log("유저 접속")
     socket.on("joinRoom", (room, name) => {
         // 방 개념으로 접속 시켜주는 함수 join(방 이름)

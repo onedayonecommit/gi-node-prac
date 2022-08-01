@@ -117,9 +117,10 @@
             // options 이건 배열
             // rooms가 select 태그인데 selectedIndex 이건 선택되어있는 옵션의 인덱스
             console.log(rooms.options);
-            console.log(rooms.selectedIndex)
+            console.log(rooms.selectedIndex);
             let room = rooms.options[rooms.selectedIndex].value;
             const socket = io.connect();
+            console.log("io=",io,"이게 io 다");
             socket.emit("joinRoom", room, name);
             
             rooms.onchange = function(e){
