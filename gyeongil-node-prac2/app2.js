@@ -29,6 +29,6 @@ io.sockets.on("connection", (socket) => {
     socket.on("message1", (data) => {
         //요기
         console.log("내가 확인한 첫번째 데이터",data)
-        // io.sockets.emit("message2", data);
+        io.sockets.emit("message2", data);
     });
 });

@@ -19,17 +19,17 @@
     window.onload = () =>{
         const socket = io.connect();
         // 클라이언트 이벤트 연결
-        // socket.on("message2",(data)=>{
-        //     let el = `
-        //     <li>
-        //         <h3>${data.name}</h3> 
-        //         <p>${data.message}</p> 
-        //         <p>${data.date}</p> 
-        //     </li>
-        //     `;
-        //     console.log("내 눈에 두번째 데이터",data)
-        //     content.innerHTML += el;
-        // })
+        socket.on("message2",(data)=>{
+            let el = `
+            <li>
+                <h3>${data.name}</h3> 
+                <p>${data.message}</p> 
+                <p>${data.date}</p> 
+            </li>
+            `;
+            console.log("내 눈에 두번째 데이터",data)
+            content.innerHTML += el;
+        })
         button.onclick = () =>{
             socket.emit('message1', {
                 name : username.value,
