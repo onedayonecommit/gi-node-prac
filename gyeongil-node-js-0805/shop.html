@@ -37,7 +37,7 @@
         $(document).ready(function(){
             // 아이콘 변경할 함수
             function changeIcon(target, from, to){
-                alert("check");
+                // alert("check");
                 // removeClass() 클래스 지우기 클래스의 이름은 매개변수로 전달
                 // addClass() 클래스 추가 클래스의 이름은 매개변수로 전달
                 $(target).removeClass(from).addClass(to);
@@ -50,11 +50,48 @@
                 // document.querySelectorAll('li[data-index = ' + index + '] .ui-li-count') 이거랑 동일
                 // $("li[data-index = " + index + "] .ui-li-count").html(count); 이거랑도 동일
                 // 제이쿼리는 안에 선택된 선택자 모든걸 다 담고있는다
-                $(".pruduct").eq(index).find(".ui-li-count").html(count);
+                $(".products").eq(index).find(".ui-li-count").html(count);
             }
-        })
-    </script>
-</body>
-<script>
-</script>
-</html>
+            
+            
+            // socket connect
+            const socket = io.connect();
+            
+            // 소켓 이벤트 연결
+            // 클라이언트가 알고 있는 이벤트
+            socket.on("count", (data)=>{
+                changeCount(data.index, data.count);
+            })
+                // 태그 이벤트 연결
+                // console.log($("product >a[data-icon]").eq(0))
+                // console.log($("product >a").eq(0))
+                $(".products >a[data-icon]").click(function(){
+                    // 클릭했을 때 attr(어트리뷰트 속성 이름, 밸류)를 추가
+                    let $this = $(this)
+                    let index = $this.attr("data-index");
+                    if($this.attr("toggle") != "off"){
+                        socket.emit('cart',parseInt(index));
+                        changeIcon(this, "ui-icon-heart", "ui-icon-check") // 두번째 매개변수를 지우고 세번쩨 체크를 추가
+                        $this.attr("toggle","off");
+                    }else{
+                        if(confirm("물건 구매 하시겠습니까? ")){
+                            socket.emit("buy", parseInt(index));
+                            // 클릭한 $this요소의 부모태그 선택 () parent() 함수 반환값이 부모 태그
+                            // remove() 해당 태그를 지움
+                            $this.parent().remove();
+                            
+                            $(listview).listview("refresh");
+                        } else{
+                            socket.emit("return", parseInt(index));
+                            changeIcon(this, "ui-icon-check", "ui-icon-heart");
+                            $this.attr("toggle","on");
+                        } 
+                    }
+                    // 클릭했을 때 attr(어트리뷰트 속성 이름, 밸류)를 추가
+                });
+            });
+            </script>
+            </body>
+            <script>
+                </script>
+                </html>
