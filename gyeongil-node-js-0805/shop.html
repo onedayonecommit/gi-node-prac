@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<link
+            rel="stylesheet"
+            href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"
+        />
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<body>
+    상점 페이지
+    <div class="content">
+        <ul id="listview" data-role="listview" data-inset="true" data-filter="true">
+            <li data-role="list-divider">products</li>
+            <% products.forEach(function(item,index){ %>
+                <li class="products" data-index="<%= item.index %>">
+                    <a href="#">
+                        <img src="/image/image.jpeg" alt="">
+                        <h3><%= item.name %></h3>
+                        <h3><%= item.price %></h3>
+                        <span class="ui-li-count"><%= item.count %></span>
+                    </a>
+                    <a href="#" data-icon="heart" data-index="<%= item.index %>"></a>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+    <script>
+        //document 얘가 로드가 다 되었을 때 ready
+        $(document).ready(function(){
+            // 아이콘 변경할 함수
+            function changeIcon(target, from, to){
+                alert("check");
+                // removeClass() 클래스 지우기 클래스의 이름은 매개변수로 전달
+                $(target).removeClass("")
+            }
+        })
+    </script>
+</body>
+<script>
+</script>
+</html>
