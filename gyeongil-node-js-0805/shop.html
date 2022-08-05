@@ -39,7 +39,18 @@
             function changeIcon(target, from, to){
                 alert("check");
                 // removeClass() 클래스 지우기 클래스의 이름은 매개변수로 전달
-                $(target).removeClass("")
+                // addClass() 클래스 추가 클래스의 이름은 매개변수로 전달
+                $(target).removeClass(from).addClass(to);
+            }
+            // 갯수를 변경해주는 함수
+            function changeCount(index, count){
+                // class="ui-li-count"이 속성을 가진 태그를 선택
+                // li[data-index = ' + index + '] 이게 부모 태그 한칸 띄워쓰니까
+                // class = "ui-li-count"이 속성을 가진 자식
+                // document.querySelectorAll('li[data-index = ' + index + '] .ui-li-count') 이거랑 동일
+                // $("li[data-index = " + index + "] .ui-li-count").html(count); 이거랑도 동일
+                // 제이쿼리는 안에 선택된 선택자 모든걸 다 담고있는다
+                $(".pruduct").eq(index).find(".ui-li-count").html(count);
             }
         })
     </script>
