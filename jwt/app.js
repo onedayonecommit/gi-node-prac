@@ -16,14 +16,24 @@ const mysql = require("mysql2");
 const session = require("express-session");
 const { reverse } = require("dns");
 const { create } = require("domain");
+const router = require("./router/page")
 // const filestore = require("session-file-store")(session); // 세션 파일 스토어를 부르고 바로 함수 실행
-
+const page = require("./router/page")
+const createToken = require("./token")
 let temp = mysql.createConnection({
     host: "localhost",
     password: "rudghks110",
     database: "jwt",
     user: "root"
 })
+
+app.use(express.static(__dirname)); //루트로 절대 경로 설정
+app.use(express.static("cssandjs"))
+
+// 앞에 url이 있으면 해당 url 요청에서 사용할 것이라는 뜻
+// 모든 요청에서 사용
+app.use(page)
+app.use(createToken)
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(
     session({
@@ -39,7 +49,7 @@ app.use(
     })
 );
 app.set('view engine', 'ejs');
-app.set('views',"./views")
+app.set('views', "./views");
 
 app.listen(process.env.PORT, () => {
     console.log(process.env.PORT + "server start")
