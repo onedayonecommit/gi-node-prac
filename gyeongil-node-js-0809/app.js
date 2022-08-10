@@ -78,14 +78,15 @@ app.post("/login", (req, res) => {
         {
             // 타입 JWT
             type: "JWT",
+            name: "name"
             // 유저 이름
-            name : name,
+            // name : name,
         },
         process.env.KEY,
         {
             // 토큰 유효 시간 만료될 시간
             expiresIn: "5m",
-            issuer: "나"
+            issuer: "나",
         }
     );
     let data = {

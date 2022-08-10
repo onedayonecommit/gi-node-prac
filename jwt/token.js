@@ -2,24 +2,24 @@
 const jwt = require("jsonwebtoken");
 const express = require("express");
 const router = express.Router();
-const dotenv = require("dotenv").config();
+const dotenv12 = require("dotenv").config();
 const secretkey = process.env.SECRET_KEY;
 
-router.post("/login", (req, res) => {
+router.post("/login123", (req, res) => {
     const name = "soon";
-    token = jwt.sign({
-        type: jwt,
+    const token = jwt.sign({
+        type: "jwt",
         name: name
     },
         secretkey, {
         expiresIn: "5m",
-        issuer: 'gyeonghwan'
+        issuer: 'soon'
     }
     );
     req.session.token = token;
     let data = {
         msg: "토큰 발급 완료",
-        token
+        token,
     }
     res.send(data);
 })

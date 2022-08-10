@@ -33,7 +33,6 @@ app.use(express.static("cssandjs"))
 // 앞에 url이 있으면 해당 url 요청에서 사용할 것이라는 뜻
 // 모든 요청에서 사용
 app.use(page)
-app.use(createToken)
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(
     session({
@@ -47,12 +46,13 @@ app.use(
         // 저장소를 만들지 여부
         // store: new filestore(),
     })
-);
-app.set('view engine', 'ejs');
-app.set('views', "./views");
-
-app.listen(process.env.PORT, () => {
-    console.log(process.env.PORT + "server start")
+    );
+    app.set('view engine', 'ejs');
+    app.set('views', "./views");
+    app.use(createToken);
+    
+    app.listen(process.env.PORT, () => {
+        console.log(process.env.PORT + "server start")
 })
 
 app.get("/", (req, res) => {

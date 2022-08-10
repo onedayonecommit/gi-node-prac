@@ -6,6 +6,7 @@ const server = app.listen(8080, () => {
     console.log('8080 server start!');
 })
 const mysql = require("mysql2")
+const web3 = require("web3")
 const temp = mysql.createConnection({
     host: 'localhost',
     user: 'root',
