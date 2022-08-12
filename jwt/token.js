@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken");
 const express = require("express");
 const router = express.Router();
-const dotenv12 = require("dotenv").config();
+const dotenv = require("dotenv").config();
 const secretkey = process.env.SECRET_KEY;
 
 router.post("/login123", (req, res) => {

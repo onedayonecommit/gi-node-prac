@@ -20,6 +20,7 @@ const router = require("./router/page")
 // const filestore = require("session-file-store")(session); // 세션 파일 스토어를 부르고 바로 함수 실행
 const page = require("./router/page")
 const createToken = require("./token")
+const decodedToken = require("./verify")
 let temp = mysql.createConnection({
     host: "localhost",
     password: "rudghks110",
@@ -32,7 +33,6 @@ app.use(express.static("cssandjs"))
 
 // 앞에 url이 있으면 해당 url 요청에서 사용할 것이라는 뜻
 // 모든 요청에서 사용
-app.use(page)
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(
     session({
@@ -49,8 +49,9 @@ app.use(
     );
     app.set('view engine', 'ejs');
     app.set('views', "./views");
+    app.use(page)
     app.use(createToken);
-    
+    app.use(decodedToken);
     app.listen(process.env.PORT, () => {
         console.log(process.env.PORT + "server start")
 })
@@ -126,5 +127,7 @@ app.get("/session", (req,res) => {
         req.session.count++;
         res.send("hi")
     }
-    else res.redirect("/")
+    else res.redirect("/") // 
 })
+
+app.get
