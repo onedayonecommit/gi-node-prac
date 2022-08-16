@@ -36,10 +36,10 @@ const mysql = require("mysql2");
 const app = express();
 
 app.use(express.static("cssandjs"));
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: false })); // body-parser 대용
 
 // 헤더에 쿠키 추가를 위해 사용
-app.use(cookieParser());
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
@@ -60,7 +60,7 @@ app.post("/login", (req, res) => {
       {
         id: user.id,
       },
-      process.env.SECRET_KEY,
+      process.env.ACCESS_SECRET_KEY,
       {
         expiresIn: "5m",
       }
@@ -69,7 +69,7 @@ app.post("/login", (req, res) => {
       {
         id: user.id,
       },
-      proces.env.REFRESHTOKEN_SECRET_KEY,
+      process.env.REFRESH_SECRET_KEY,
       {
         expiresIn: "1d",
       }
@@ -83,6 +83,33 @@ app.post("/login", (req, res) => {
       return res.send("아이디 비밀번호 틀림");
     }
 });
+app.get("/hi", (req, res) => {
+  res.render("join")
+})
+
+app.post("/refresh", (req, res) => {
+    // ?.뒤에 오는 키값이 있으면 먼저 확인하고 값 반환
+    // req.cookies?.refresh refresh 키값이 없어도 크래쉬 방지
+    if (req.cookies?.refresh) {
+      const refreshtoken = req.cookies.refresh;
+      // 리프레쉬 토큰 검사
+      jwt.verify(refreshtoken, process.env.REFRESH_SECRET_KEY, (err, decoded) => {
+        if (err) res.send("재 로그인 요청")
+        else {
+          const accessToken = jwt.sign({
+            id: user.id,
+          }, process.env.ACCESS_SECRET_KEY, {
+            expiresIn: "5m",
+            issuer:"gyeonghwan"
+          })
+          res.cookie("refresh", refreshtoken, { maxAge: 24 * 60 * 60 * 1000 });
+          res.send(accessToken)
+        }
+      })
+    } else {
+      res.send("다시 로그인 하세요")
+    }
+})
 
 app.listen(process.env.PORT, () => {
   console.log(process.env.PORT + "server start");

@@ -1,16 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="/login" method="post">
-        <input type="text" placeholder="id" name="id">
-        <input type="password" placeholder="password" name="password">
-    <button type="submit">회원가입</button>
-</form>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <style>
+        body{
+            /* padding 은 안쪽여백
+                margin은 바깥 여백
+                padding: ; 
+                margin: ; 
+            */
+        }
+    </style>
+    <body>
+        <div id="container">
+            <div id="main">
+                <form action="/login" method="post">
+                    <input type="text" placeholder="id" name="id">
+                    <input type="password" placeholder="password" name="password">
+                    <button type="submit">회원가입</button>
+                </form>
+            </div>
+        </div>
+    </body>
 </html>
+
+<!-- 부모 div를 따라가 객체를 자식한테 사이즈를 줘 그럼 부모가 자식만큼 커진다고 -->
