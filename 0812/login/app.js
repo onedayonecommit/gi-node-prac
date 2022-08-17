@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const app = express();
 const { mainModule } = require("process");
-const { unwatchFile } = require("fs");
+const { connect } = require("http2");
 
 app.use(express.static('cssandjs')); // 프론트에 이미지나 js css
 app.use(cookieParser());
@@ -33,11 +33,33 @@ app.get("/", (req, res) => {
 })
 
 app.post("/login", (req, res) => {
+    // const { userId, password } = req.body;
     const qs = `select id from members where id = '${req.body.id}' and pw = '${req.body.pw}'`
     connection.query(qs, (err, result) => {
         if (err) console.log("qserror", err)
         else {
             if (result[0] != undefined) {
+                // ?. 구문 뒤에 키값이 있는지 먼저 보고 값을 참조 없으면 터지는 일을 방지
+                const accesstoken = jwt.sign({
+                    userid: result[0].id,
+                    mail: "rudghks09@naver.com"
+                }, process.env.ACCESS_TOKEN, {
+                    expiresIn: "15s",
+                    issuer:"gyeonghwan"
+                }
+                )
+                const refreshtoken = jwt.sign({
+                    userid:result[0].id,
+                }, process.env.REFRESH_TOKEN, {
+                    expiresIn: "2m",
+                    issuer:"gyeongil"
+                })
+                const sql = "update members set refresh = ? where id = ?";
+                connection.query(sql, [refreshtoken, req.body.id], (err, res) => {
+                    if (err) console.log(err)
+                })
+                req.session.access_token = accesstoken
+                req.session.refresh_token = refreshtoken
                 res.send("suc")
             }
             else if (result[0] == undefined) {
@@ -48,6 +70,58 @@ app.post("/login", (req, res) => {
             }
         }
     })
+})
+
+const middleware = (req, res, next) => {
+    // const accessToken = req.session.access_token;
+    // const refreshtoken = req.session.refresh_token;
+    const { access_token, refresh_token } = req.session;
+    jwt.verify(access_token, process.env.ACCESS_TOKEN, (err, acc_decoded) => {
+        if (err) {
+            // 썩은 토큰이면
+            // 로그인페이지로 넘기거나
+            // 404 500 에러페이지 발생
+            // 알아서 하기
+            res.send("재 로그인 요청");
+            res.redirect("/")
+        }
+        else {
+            // next();
+            jwt.verify(refresh_token, process.env.REFRESH_TOKEN, (err, ref_decoded) => {
+                if (err) res.send("재 로그인 요청")
+                else {
+                    const sql = "select refresh from members where id = ?"
+                    connection.query(sql, [ref_decoded.userid], (err, res1) => {
+                        if (err) console.log("sql에러 ", err)
+                        else {
+                            if (res[0].refresh == refresh_token) { // 다른 사람이 중간에 로그인해서 재발급이 됐는지 확인
+                                const accessToken = jwt.sign({
+                                    user:ref_decoded.userid,
+                                }, process.env.ACCESS_TOKEN, {
+                                    expiresIn: "15s",
+                                    issuer:"gyeonghwan"
+                                })
+                                req.session.access_token = accessToken;
+                                next();
+                            }
+                            else {
+                                res.send("재 로그인 요청")
+                            }
+                        }
+                    })
+                }
+            })
+        }
+    })
+}
+
+// middleware 이 미들웨어 함수에서 next() 함수를 사용하지 못하면
+// 다음 콜백함수는 실행되지 않는다
+// 문지기한테 막힘
+// next() 함수를 실행하면 다음 콜백으로 요청 및 응답 작업 동작을 한다.
+// 로그인이 되어있는 페이지만 요청과 응답을 할 수 있게
+app.get("/check", middleware, (req, res) => {
+    res.send('login complete');
 })
 
 app.get("/join", (req, res) => {

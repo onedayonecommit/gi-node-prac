@@ -55,38 +55,62 @@
 
 // pbkdf
 
-// crypto.randomBytes(32, (err, buf) => {
-//     crypto.pbkdf2(
-//         pw,
-//         buf.toString("base64"), // 문자열로 반환하는데 인코딩 방식은 base64
-//         1600000, // 반복 횟수를 지정, 반복 횟수가 많아질수록 복호화하기 어려움 다만 시간도 많이 걸림
-//         64, // 결과값의 길이를 설정
-//         "sha512", // 암호화 알고리즘
-//         (err, hashed) => { // 마지막이 콜백 함수
-//             console.log("1232131",hashed)
-//         }
-//     )
-// })
+crypto.randomBytes(32, (err, buf) => {
+    crypto.pbkdf2(
+        pw,
+        buf.toString("base64"), // 문자열로 반환하는데 인코딩 방식은 base64
+        1600000, // 반복 횟수를 지정, 반복 횟수가 많아질수록 복호화하기 어려움 다만 시간도 많이 걸림
+        64, // 결과값의 길이를 설정
+        "sha512", // 암호화 알고리즘
+        (err, hashed) => { // 마지막이 콜백 함수
+            console.log("1232131",hashed)
+        }
+    )
+})
 
-// const createSalt = () => {
-//     // 암호화를 처리하는데 시간이 걸리기 때문에
-//     // Promise를 사용해서 비동기 처리를 한다.
-//     new Promise((resolve, reject) => {
-//         // 랜덤 바이트 생성 길이가 64
-//         crypto.randomBytes(64, (err, buf) => {
-//             if (err) reject(err) // 실패시 err 반환
-//             else resolve(buf.toString("base64")); // 성공시 resolve 함수로 반환
-//         })
-//     })
-// };
+const createSalt = () => {
+    // 암호화를 처리하는데 시간이 걸리기 때문에
+    // Promise를 사용해서 비동기 처리를 한다.
+    new Promise((resolve, reject) => {
+        // 랜덤 바이트 생성 길이가 64
+        crypto.randomBytes(64, (err, buf) => {
+            if (err) reject(err) // 실패시 err 반환
+            else resolve(buf.toString("base64")); // 성공시 resolve 함수로 반환
+        })
+    })
+};
 
 // 비밀번호를 해싱 해주는 함수
-// const pwHasher = (userId, password) => {
-//     // Promise 를 사용해서 비동기 처리
-//     new Promise((resolve, reject) => {
-        
-//     })
-// };
+const pwHasher = (userId, password) => {
+    // Promise 를 사용해서 비동기 처리
+    new Promise((resolve, reject) => {
+        const qs = "select * from members where id = ?"
+        connection.query(qs, [userId], (err, result) => {
+            if (result[0]?.salt) {
+                const salt = await result[0].salt;
+                crypto.pbkdf2(password, salt, 5165165, 64, "sha512", (err, key) => {
+                    resolve(key.toString("base64"))
+                })
+            }
+            else {
+                reject("err");
+            }
+        })
+    })
+};
+
+const createPwHashed = (password) => {
+    // 비동기 처리
+    new Promise((resolve, reject) => {
+        const salt = await createSalt(); // 여기서 소금 만들구
+        crypto.pbkdf2(password, salt, 512345,64,"sha512",(err, buf) => {
+            if (err) reject(err);
+            else {
+                resolve({password:buf.toString("base64"),salt})
+            }
+        })
+    })
+}
 
 // 간단 암호화된 로그인 만들어보자
 // 모듈은 express fs mysql2

@@ -10,46 +10,45 @@
   <body>
     <input type="text" id="id" />
     <input type="text" id="pw" />
-    <button onclick="clickbtn()">회원가입</button><br>
+    <button onclick="clickbtn()">회원가입</button><br />
     <input type="text" id="id1" />
     <input type="text" id="pw1" />
-    <button onclick="loginbtn()">로그인</button><br>
+    <button onclick="loginbtn()">로그인</button><br />
   </body>
   <script>
     function clickbtn() {
-        console.log("btn 눌림")
+      console.log("btn 눌림");
       let id = $("#id").val();
       let pw = $("#pw").val();
-        $.ajax({
-            url:"/signup",
-            type:"POST",
-            data:{
-                id:id,
-                pw:pw
-            },
-            success:function(data){
-                if(data == "suc") alert("회원가입 성공")
-            }
-        })
-
+      $.ajax({
+        url: "/signup",
+        type: "POST",
+        data: {
+          id: id,
+          pw: pw,
+        },
+        success: function (data) {
+          if (data == "suc") alert("회원가입 성공");
+        },
+      });
     }
-    function loginbtn(){
-        console.log("holy")
-        let id = $("#id1").val();
-        let pw = $("#pw1").val();
+    function loginbtn() {
+      console.log("holy");
+      let id = $("#id1").val();
+      let pw = $("#pw1").val();
 
-        $.ajax({
-            url:"/login",
-            type:"POST",
-            data:{
-                id:id,
-                pw:pw
-            },
-            success:function(data){
-                if(data == "suc") alert("로긴 성공")
-                else if(data == "fail") alert("id or pw 확인 바람")
-            }
-        })
+      $.ajax({
+        url: "/login",
+        type: "POST",
+        data: {
+          id: id,
+          pw: pw,
+        },
+        success: function (data) {
+          if (data == "suc") alert("로긴 성공");
+          else if (data == "fail") alert("id or pw 확인 바람");
+        },
+      });
     }
   </script>
 </html>
