@@ -8,9 +8,6 @@ const config = {
     database: "test9",
     multipleStatements: true,
   },
-};
-
-const config2 = {
   dev2: {
     user: "root",
     password: process.env.DB_PASSWORD,
