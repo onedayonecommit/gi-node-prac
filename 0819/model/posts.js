@@ -16,8 +16,15 @@ class Post extends Sql.Model {
         paranoid: false,
         charset: "utf8",
         collate: "utf8_general_ci",
+        underscored: true,
       }
     );
+  }
+  static associate(db) {
+    // belongsTo 함수를 사용해서 User 테이블과 연결 이 테이블이 자식
+    // belongsTo 첫번째 매개변수는 연결될 테이블 이름
+    // 유저의 id가 타겟이다.
+    db.Post.belongsTo(db.User, { foreignKey: "user_id", targetKey: "id" });
   }
 }
 

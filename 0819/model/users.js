@@ -26,7 +26,7 @@ class User extends Sql.Model {
           // 여기서는 컬럼에 name값이 겹치지 않도록 사용
           // 주민번호나 전화번호 겹치지 않는 값들 혹여나 겹치지 않도록
 
-          primaryKey: true,
+          //   primaryKey: true,
           // 기본키로 설정을 할 것 인지 기본키 한개는 무조건 있어야한다.
           // 중복되지 않는 키
         },
@@ -45,12 +45,12 @@ class User extends Sql.Model {
           allowNull: true,
         },
         // 생성한 시간이 필요하다 할 때 사용 이 구문 또는 테이블자체에 timestamps: true 로 설정하거나
-        created_at: {
-          // 시간타입으로 받고
-          type: Sql.DATE,
-          allowNull: false,
-          defaultValue: Sql.NOW,
-        },
+        // created_at: {
+        //   // 시간타입으로 받고
+        //   type: Sql.DATE,
+        //   allowNull: false,
+        //   defaultValue: Sql.NOW,
+        // },
       },
       {
         // 매개변수 db
@@ -62,7 +62,7 @@ class User extends Sql.Model {
         // underscored 는 카멜 => 스네이크 표기법으로 바꿔주는거
         // underScore 이게 카멜 표기 => under_scored 스네이크 표기
         // false 로 하면 under_scored => underScore 로 바뀜
-        underscored: false,
+        underscored: true,
         // 얘는 모델의 이름을 설정 할 수 있다.
         modelName: "User", // 관경형으로 구성할 때 사용됌
         tableName: "users", // 데이터 베이스의 테이블의 이름을 설정한다.
@@ -76,6 +76,16 @@ class User extends Sql.Model {
         collate: "utf8_general_ci",
       }
     );
+  }
+  // 1:N (foreign key) 외래키
+  static associate(db) {
+    // 1:N 관계 (hasMany, belongsTo)
+    // sequelize에서 1:N 관계를 hasMany 함수로 정의한다.
+    // hasMany 함수를 이용해서 테이블 관계를 정의해준다.
+    // 첫번째 매개변수로 연결할 테이블
+    // sourceKey User테이블안에 무슨 키를 foreignKey와 연결할지
+    // hasMany()첫번째로 넘겨준 테이블이 foreignKey로 연결되고 foreignKey 이름은 user_id이다.
+    db.User.hasMany(db.Post, { foreignkey: "user_id", sourceKey: "id" });
   }
 }
 

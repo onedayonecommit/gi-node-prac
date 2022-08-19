@@ -24,5 +24,8 @@ db.Post = Post;
 // 이 구문이 없으면 테이블이 생성되지 않는다.
 User.init(sequelize);
 Post.init(sequelize);
+
+User.associate(db);
+Post.associate(db);
 // 보내고 싶은 값을 다 넣은 객체를 이제 내보냄
 module.exports = db;

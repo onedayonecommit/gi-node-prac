@@ -5,8 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   </head>
   <body>
-    hihi <%=id %>
+    <h1>유저 페이지</h1>
+    <ul>
+      <% data.forEach(function(user){ %>
+      <li class="item">
+        <span class="name"><%= user.name%></span>님 <%= user.age%>살 코멘트 <%=
+        user.msg%> <input type="text" class="text" /><button class="item-btn">
+          글 등록
+        </button>
+        <a href="">등록 글 보러가기</a>
+      </li>
+      <% }) %>
+    </ul>
   </body>
+  <script>
+    // dom이 모두 생겼을 때
+    window.onload = function () {
+      // 모든 item 클래스가 붙은 태그 가져오기
+      let items = document.querySelectorAll(".item");
+      // 갯수만큼 반복
+      items.forEach((e) => {
+        // 해당 인덱스 태그에서 item-btn 클래스 찾고 클릭 이벤트 붙여줌
+        e.querySelector(".item-btn").onclick = function () {
+          let text = e.querySelector(".text").value;
+          let name = e.querySelector(".name").innerHTML;
+          $.ajax({
+            url: "/create_post",
+            type: "POST",
+            data: { name, text },
+          });
+          e.querySelector(".text").value = "";
+        };
+      });
+    };
+  </script>
 </html>
