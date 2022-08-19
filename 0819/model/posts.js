@@ -15,8 +15,10 @@ class Post extends Sql.Model {
         tableName: "posts",
         paranoid: false,
         charset: "utf8",
-        collate: "uft8_general_ci",
+        collate: "utf8_general_ci",
       }
     );
   }
 }
+
+module.exports = Post;

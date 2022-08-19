@@ -5,6 +5,7 @@ const Sql = require("sequelize");
 // require로 가져오기
 const config = require("../config/config");
 const User = require("./users");
+const Post = require("./posts");
 // 시퀄라이즈 객체 생성 옵션을 적용한 객체 만들어 놓는다.
 const sequelize = new Sql(
   config.dev.database,
@@ -19,8 +20,9 @@ const db = {};
 // User도 같이 내보내서 사용
 db.sequelize = sequelize;
 db.User = User;
-
+db.Post = Post;
 // 이 구문이 없으면 테이블이 생성되지 않는다.
 User.init(sequelize);
+Post.init(sequelize);
 // 보내고 싶은 값을 다 넣은 객체를 이제 내보냄
 module.exports = db;
