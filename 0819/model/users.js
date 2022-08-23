@@ -13,7 +13,7 @@ class User extends Sql.Model {
       {
         // name 컬럼 하나
         name: {
-          // 시퀄라이즈 모델 안에 있는 데이터 타입을 사용해야함
+          // 시퀄라이즈 모듈 안에 있는 데이터 타입을 사용해야함
           // 그래서 가져온 시퀄라이즈 모듈 안에 있는 STRING 객체를 사용
           // varchar(80)
           type: Sql.STRING(20),
@@ -64,7 +64,7 @@ class User extends Sql.Model {
         // false 로 하면 under_scored => underScore 로 바뀜
         underscored: true,
         // 얘는 모델의 이름을 설정 할 수 있다.
-        modelName: "User", // 관경형으로 구성할 때 사용됌
+        modelName: "User", // 관계형으로 구성할 때 사용됌
         tableName: "users", // 데이터 베이스의 테이블의 이름을 설정한다.
         // paranoid true 로 설정하면 deleted_at 이라는 컬럼이 자동 생성됌
         // 컬럼값은 남아있고 deletedAt이 값에 삭제한 시간이 추가된다.
