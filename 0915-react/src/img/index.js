@@ -1,0 +1,15 @@
+import Img1 from './Image.jpg'
+// import img1 from 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiUbI_8QQKp-VYsPrLVOrG98jLemahgFg4xoGjGBmQUw&s'
+// import img1 from 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiUbI_8QQKp-VYsPrLVOrG98jLemahgFg4xoGjGBmQUw&s'
+// import img1 from 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiUbI_8QQKp-VYsPrLVOrG98jLemahgFg4xoGjGBmQUw&s'
+// import img1 from 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiUbI_8QQKp-VYsPrLVOrG98jLemahgFg4xoGjGBmQUw&s'
+// import img1 from 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiUbI_8QQKp-VYsPrLVOrG98jLemahgFg4xoGjGBmQUw&s'
+// import img1 from 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiUbI_8QQKp-VYsPrLVOrG98jLemahgFg4xoGjGBmQUw&s'
+// import img1 from 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiUbI_8QQKp-VYsPrLVOrG98jLemahgFg4xoGjGBmQUw&s'
+// import img1 from 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiUbI_8QQKp-VYsPrLVOrG98jLemahgFg4xoGjGBmQUw&s'
+// import img1 from 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiUbI_8QQKp-VYsPrLVOrG98jLemahgFg4xoGjGBmQUw&s'
+// import img1 from 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiUbI_8QQKp-VYsPrLVOrG98jLemahgFg4xoGjGBmQUw&s'
+// import img1 from 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiUbI_8QQKp-VYsPrLVOrG98jLemahgFg4xoGjGBmQUw&s'
+// import img1 from 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiUbI_8QQKp-VYsPrLVOrG98jLemahgFg4xoGjGBmQUw&s'
+
+export { Img1 }
